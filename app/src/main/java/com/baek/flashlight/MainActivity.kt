@@ -1,5 +1,6 @@
 package com.baek.flashlight
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
@@ -10,11 +11,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val torch = Torch(this)
+
+
+
 
         flash_switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) torch.flashOn()
-            else torch.flashOff()
+            if (isChecked) {
+                val intent = Intent(this, TorchService::class.java)
+                intent.action = "on"
+                startService(intent)
+            } else {
+                val intent = Intent(this, TorchService::class.java)
+                intent.action = "off"
+                startService(intent)
+            }
         }
     }
 }
